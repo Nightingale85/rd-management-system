@@ -1,0 +1,16 @@
+<div th:fragment="sidebar" id="sidebar-wrapper" xmlns:th="http://www.w3.org/1999/xhtml">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            <a th:href="@{'/rd/'}"> Main </a>
+        </li>
+        <li>
+            <a th:href="@{'/rd/dashboard'}">Dashboard</a>
+        </li>
+        <li>
+            <a href="javascript:history.back()">Back</a>
+        </li>
+        <li>
+            <a href="/login?logout">Logout</a>
+        </li>
+    </ul>
+</div>

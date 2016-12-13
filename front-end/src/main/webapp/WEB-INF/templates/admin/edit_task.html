@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/XSL/Transform" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Practical Task</title>
+    <link rel="icon" th:href="@{/static/img/favicon.png}"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/admin.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/sidebar_admin::sidebar_admin"></div>
+
+<div class="container-fluid">
+    <div class="col-sm-offset-3">
+        <h2 class="sub-header">Edit Practical Task</h2>
+        <form id="addTaskForm" th:action="@{/rd/admin/task/edit}" th:object="${task}" method="post">
+            <table class="table">
+                <tr>
+                    <td>Title:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" id="title" placeholder="Practical Task Title"
+                               th:field="*{title}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Practical Task Description"
+                                  th:field="*{description}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Deadline:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="dd.mm.yyyy"
+                               pattern="\d{2}.\d{2}.\d{2}" th:field="*{deadline}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Functional requirements:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Practical Task functional requirements"
+                                  th:field="*{functionalRequirements}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Non functional requirements:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Practical Task non functional requirements"
+                                  th:field="*{nonFunctionalRequirements}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Score system:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Practical Task score system"
+                                  th:field="*{scoreSystem}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Additional materials:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Practical Task additional materials"
+                                  th:field="*{additionalMaterials}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Guide:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Practical Task guide"
+                                  th:field="*{guide}"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" th:field="*{topicId}">
+            <input type="hidden" th:field="*{id}">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RD Managmant System</title>
+
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/program-info.css}" rel="stylesheet">
+    <link th:href="@{/static/css/pt_table.css}" rel="stylesheet">
+    <script th:src="@{/static/js/docs.min.js}"></script>
+
+</head>
+<body>
+<div id="wrapper">
+
+    <div th:replace="fragments/sidebar::sidebar"></div>
+        <div id="page-content-wrapper">
+            <table class="table table-hover" style="width:55%;  background: #fdfdfe">
+                        <tr>
+                            <td class="ptwidth">Practical task</td>
+                            <td  th:text="${task.title}"></td>
+                        </tr>
+                        <tr>
+                            <td class="ptwidth">deadline</td>
+                            <td th:text="${task.deadline}"></td>
+                        </tr>
+                        <tr>
+                            <td class="ptwidth">Link to the description</td>
+                            <td th:text="${task.description}"></td>
+                        </tr>
+                        <tr >
+                            <td class="ptwidth">Functional requirements</td>
+                            <td th:text="${task.functionalRequirements}"></td>
+                        </tr>
+                        <tr>
+                            <td class="ptwidth">Non functional requirements</td>
+                            <td th:text="${task.nonFunctionalRequirements}"></td>
+                        </tr>
+                        <tr>
+                            <td class="ptwidth">Score system</td>
+                            <td th:text="${task.scoreSystem}"></td>
+                        </tr>
+                        <tr>
+                            <td class="ptwidth">Additional materials</td>
+                            <td th:text="${task.additionalMaterials}"></td>
+                        </tr>
+                        <tr>
+                            <td class="ptwidth">Guide</td>
+                            <td th:text="${task.guide}"></td>
+                        </tr>
+                    </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

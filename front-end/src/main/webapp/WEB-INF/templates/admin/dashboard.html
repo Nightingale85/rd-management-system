@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <link rel="icon" th:href="@{/static/img/favicon.png}"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/static/js/admin_script.js}"></script>
+    <link th:href="@{/static/css/admin.css}" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="content">
+
+        <!--sidebar-->
+        <div th:replace="fragments/sidebar_admin::sidebar_admin"></div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="sub-header">Programs</h2>
+
+            <div class="table-responsive">
+                <table class="program_table table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>LinkToDescription</th>
+                        <th>Date start</th>
+                        <th>Date end</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="program : ${programs}">
+                        <td>
+                            <a class="program_view"
+                               th:href="@{'../admin/edit/program/' + ${program.id}}"
+                               th:text="${program.title}"></a>
+                            <a sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{'../admin/edit/program/' + ${program.id}}" type="button"
+                               id="edit_button" class="edit_button"></a>
+                        </td>
+                        <td>
+                            <span class="program_view" th:text="${program.description}"></span>
+                        </td>
+                        <td>
+                            <span class="program_view" th:text="${program.startDate}"></span>
+                        </td>
+                        <td>
+                            <span class="program_view" th:text="${program.endDate}"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <form id="addNewItemForm" class="well onEdit" th:action="@{../admin/new_program}" method="post">
+                    <label for="newProgramName">Program name:
+                        <input type="text" id="newProgramName" th:field="${newProgram.title}">
+                    </label>
+
+                    <label for="newProgramDescription">Program description:
+                        <input id="newProgramDescription" th:field="${newProgram.description}">
+                    </label>
+
+                    <label for="programStartDate">Date start:
+                        <input id="programStartDate" type="text" pattern="\d{1,2}.\d{1,2}.\d{2}"
+                               th:field="${newProgram.startDate}"/>
+                    </label>
+
+                    <label for="programEndDate">Date end:
+                        <input id="programEndDate" type="text" pattern="\d{1,2}.\d{1,2}.\d{2}"
+                               th:field="${newProgram.endDate}">
+                    </label>
+
+                    <input type="hidden" th:field="${newProgram.modulesId}">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+
+            <button sec:authorize="hasRole('ROLE_MANAGER')" type="button" class="btn btn-primary" id="showFormButton">Add program</button>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

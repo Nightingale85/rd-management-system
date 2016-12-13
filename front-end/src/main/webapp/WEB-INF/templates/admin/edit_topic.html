@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Topic</title>
+    <link rel="icon" th:href="@{/static/img/favicon.png}"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link th:href="@{/static/css/admin.css}" rel="stylesheet">
+
+</head>
+<body>
+<div th:replace="fragments/sidebar_admin::sidebar_admin"></div>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div>
+        <div class="container">
+
+            <form id="editTopicForm" class="well" style="background-color: white" role="form" action="#"
+                  th:action="@{../topic/edit}" th:object="${topic}" method="post">
+
+                <input type="number" th:field="${topic.id}" hidden/>
+                <input type="number" th:field="${topic.moduleId}" hidden/>
+
+                <label for="title">Topic:</label>
+
+                <div>
+                    <h3><input id="topicTitle" class="editProgramField form-control" type="text"
+                               th:field="${topic.title}"
+                               required></h3>
+                </div>
+                <hr>
+                <div>
+                    <label for="topicDescription">Topic description:</label>
+                    <input class="editTopicFile form-control" type="text" id="topicDescription"
+                           th:field="${topic.description}" required>
+                </div >
+                <hr>
+                <div sec:authorize="hasRole('ROLE_MANAGER')" id="viewButtonsGroup" class="btn-group" th:object="${topic}">
+                    <button type="submit" form="editTopicForm" class="btn btn-primary">Save</button>
+                    <a th:href="@{'/rd/admin/module/' + ${topic.moduleId}}">
+                        <input type="button" form="editTopicForm" value="Cancel" class="btn btn-primary" onClick=back()></a>
+                </div>
+            </form>
+        </div>
+        <br><br>
+
+        <div th:object="${lecture}" style="width: 40%; float: left; margin-left: 5%">
+            <table th:if="${lecture != null}" class="table">
+                <tr>
+                    <td>Lecture Title:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text" id="LectureTitle"
+                               th:field="${lecture.title}" placeholder="Lecture Title" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Agenda:</td>
+                    <td>
+            <textarea class="showLecture form-control" rows="5" id="Lectureagenda" placeholder="Lecture Agenda"
+                      th:field="${lecture.agenda}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date/Time Of Lecture:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text" placeholder="dd.mm.yyyy hh:mm"
+                               pattern="\d{2}.\d{2}.\d{2} \d{2}:\d{2}" th:field="${lecture.dateOfLecture}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Type Of Place:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text" placeholder="Lecture Type Of Place"
+                               th:field="${lecture.typeOfPlace}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Device:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text" placeholder="Lecture Device"
+                               th:field="${lecture.device}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link Topic Epam:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text" placeholder="Lecture Link Topic Epam"
+                               th:field="${lecture.linkTopicEpam}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link To Youtube:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text" placeholder="Lecture Link To Youtube"
+                               th:field="${lecture.linkYoutube}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link to Video Portal Epam:</td>
+                    <td>
+                        <input class="showLecture form-control" type="text"
+                               placeholder="Lecture Link to Video Portal Epam"
+                               th:field="${lecture.linkVideoPortalEpam}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>
+            <textarea class="showLecture form-control" rows="5" placeholder="Lecture Description"
+                      th:field="${lecture.description}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td align="right">
+                        <a th:href="@{'/rd/admin/lecture/edit?topicId=' + ${topic.id}}">
+                            <input type="button" value="Edit Lecture" class="btn btn-primary" th:r="${topic.id}"
+                                   onClick=back()></a>
+                    </td>
+                </tr>
+            </table>
+
+            <table th:if="${lecture == null}" class="table">
+                <tr>
+                    <td><h4>This Topic don't have lecture. Please create new lecture</h4></td>
+                    <td>
+                        <a th:href="@{'/rd/admin/lecture/add?topicId=' + ${topic.id}}">
+                            <input type="button" value=" Add Lecture " class="btn btn-primary" onClick=back()></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div th:object="${task}" style="width: 40%; float: right; margin-right: 5%">
+            <table th:if="${task != null}" class="table">
+                <tr>
+                    <td>Practical Task Title:</td>
+                    <td>
+                        <input class="showPracticalTask form-control" type="text" id="title"
+                               placeholder="Practical Task Title"
+                               th:field="${task.title}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>
+            <textarea class="showPracticalTask form-control" rows="5"
+                      placeholder="Practical Task Description"
+                      th:field="${task.description}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Deadline:</td>
+                    <td>
+                        <input class="showPracticalTask form-control" type="text" placeholder="dd.mm.yyyy"
+                               pattern="\d{2}.\d{2}.\d{2}" th:field="${task.deadline}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Functional requirements:</td>
+                    <td>
+            <textarea class="showPracticalTask form-control" rows="5"
+                      placeholder="Practical Task functional requirements"
+                      th:field="${task.functionalRequirements}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Non functional requirements:</td>
+                    <td>
+            <textarea class="showPracticalTask form-control" rows="5"
+                      placeholder="Practical Task non functional requirements"
+                      th:field="${task.nonFunctionalRequirements}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Score system:</td>
+                    <td>
+            <textarea class="showPracticalTask form-control" rows="5"
+                      placeholder="Practical Task score system"
+                      th:field="${task.scoreSystem}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Additional materials:</td>
+                    <td>
+            <textarea class="showPracticalTask form-control" rows="5"
+                      placeholder="Practical Task additional materials"
+                      th:field="${task.additionalMaterials}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Guide:</td>
+                    <td>
+            <textarea class="showPracticalTask form-control" rows="5" placeholder="Practical Task guide"
+                      th:field="${task.guide}" disabled></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td align="right">
+                        <a th:href="@{'/rd/admin/task/edit?topicId=' + ${topic.id}}">
+                            <input type="button" value="Edit Task" class="btn btn-primary" onClick=back()></a>
+                    </td>
+                </tr>
+            </table>
+            <table th:if="${task == null}" class="table">
+                <tr>
+                    <td><h4>This Topic don't have task. Please create new task</h4></td>
+                    <td>
+                        <a th:href="@{'/rd/admin/task/add?topicId=' + ${topic.id}}">
+                            <input type="button" value="Add Task" class="btn btn-primary" onClick=back()></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Program informatiom</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/program-info.css}" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/docs.min.js}"></script>
+
+</head>
+<body>
+<div id="wrapper">
+
+    <div th:replace="fragments/sidebar::sidebar"></div>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-hover" style="width:55%;  background: #fdfdfe">
+                        <tr>
+                            <td>
+                                Lecture title
+                            </td>
+                            <td th:text="${lecture.title}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Agenda
+                            </td>
+                            <td th:text="${lecture.agenda}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Description
+                            </td>
+                            <td th:text="${lecture.description}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Device
+                            </td>
+                            <td th:text="${lecture.device}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Type of place
+                            </td>
+                            <td th:text="${lecture.typeOfPlace}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date of lecture
+                            </td>
+                            <td th:text="${lecture.dateOfLecture}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Topic EPAM
+                            </td>
+                            <td th:text="${lecture.linkTopicEpam}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Video portal EPAM
+                            </td>
+                            <td th:text="${lecture.linkVideoPortalEpam}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Link YouTube
+                            </td>
+                            <td th:text="${lecture.linkYoutube}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

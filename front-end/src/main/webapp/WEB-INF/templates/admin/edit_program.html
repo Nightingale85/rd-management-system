@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Program</title>
+    <link rel="icon" th:href="@{/static/img/favicon.png}"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/static/js/edit_program.js}"></script>
+    <link th:href="@{/static/css/admin.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="container">
+
+        <!--sidebar-->
+        <div th:replace="fragments/sidebar_admin::sidebar_admin"></div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+        <form id="editProgramForm" class="well" style="background-color: white" role="form"
+              th:action="@{/rd/admin/update_program}" method="post" th:object="${programDto}">
+
+            <input
+                    type="number"
+                    th:field="${programDto.id}"
+                    hidden/>
+
+            <label for="title">Program:</label>
+            <div>
+                <h3><input id="title" class="editProgramField form-control" type="text" th:field="${programDto.title}"
+                           disabled></h3>
+            </div>
+            <label for="programStartDate">Date start:</label>
+            <input class="editProgramField" type="text" id="programStartDate" name="programDto.startDate" value="programDto.startDate" th:field="${programDto.startDate}" disabled/>
+
+            <label for="programEndDate">Date end:</label>
+            <input class="editProgramField" type="text" id="programEndDate" name="programDto.endDate" value="programDto.endDate" th:field="${programDto.endDate}" disabled>
+
+            <hr>
+
+            <div>
+                <label for="programDescription">Program description:</label>
+                <input class="editProgramField form-control" type="text" id="programDescription"
+                       th:field="${programDto.description}" disabled>
+            </div>
+        </form>
+
+        <div sec:authorize="hasRole('ROLE_MANAGER')" class="text-center">
+            <div id="editButtonsGroup" class="btn-group">
+                <button type="button" id="button_edit" class="btn btn-primary">Edit program info</button>
+                <button type="button" class="btn btn-primary" id="addNewModule">Add new module</button>
+            </div>
+
+            <div id="viewButtonsGroup" class="btn-group">
+                <button type="submit" id="button_save" form="editProgramForm" class="btn btn-primary">Save</button>
+                <button type="button" id="button_cancel" class="btn btn-primary">Cancel</button>
+            </div>
+            </div>
+
+        <br><br>
+        <form sec:authorize="hasRole('ROLE_MANAGER')" id="addModuleForm" class="well" style="background-color: white" role="form" th:action="@{/rd/admin/add_module}"
+              method="post"
+              th:object="${moduleDto}">
+            <div class="fields well">
+                <label for="programId" hidden>Program Id:</label>
+                <input id="programId" type="number" th:field="${programDto.id}" hidden>
+
+                <label for="newModuleName">Module name:</label>
+                <input id="newModuleName" type="text" th:field="${moduleDtoCreate.title}" required>
+
+                <label for="newModuleDescription">Link to description:</label>
+                <input id="newModuleDescription" type="text" th:field="${moduleDtoCreate.description}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+        <div class="row">
+
+            <div class="col-lg-6" style="background-color: white"
+                 th:each="module, index : ${moduleWithTopics}">
+                <div>
+                    <h3><label type="text" th:text="${module.moduleDto.title}"></label></h3>
+                </div>
+                <span> Description : </span>
+
+                <div class="panel panel-default">
+                    <div class="panel-body" th:text="${module.moduleDto.description}">Topic</div>
+                </div>
+                <div>
+                    <span> Topics : </span>
+                </div>
+                <div class="panel panel-default" th:each="topic : ${module.topicDtoList}">
+                    <div class="panel-body" th:text="${topic.title}">Topic</div>
+                </div>
+
+                <div class="text-center">
+                    <form  th:id="'deleteModule' + ${module.moduleDto.id}" class="well" style="background-color: white" role="form" th:action="@{'/rd/admin/delete_module/' + ${module.moduleDto.id}}"
+                           method="post" hidden>
+                        <input type="number" th:field="${programDto.id}" hidden/>
+                    </form>
+                    <a th:href="@{'/rd/admin/module/' + ${module.moduleDto.id}}">
+                        <button class="btn btn-primary" type="button">View/Edit module</button>
+                    </a>
+                    <button sec:authorize="hasRole('ROLE_MANAGER')" id="remove_module" class="btn btn-primary" type="submit"  th:form="'deleteModule' + ${module.moduleDto.id}">Remove module</button>
+                </div>
+            </div>
+
+        </div>
+     </div>
+    </div>
+</div>
+
+
+</body>
+</html>

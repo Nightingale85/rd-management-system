@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/XSL/Transform" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lecture</title>
+    <link rel="icon" th:href="@{/static/img/favicon.png}"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/admin.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/sidebar_admin::sidebar_admin"></div>
+
+<div class="container-fluid">
+    <div class="col-sm-offset-3">
+        <form id="addLectureForm" th:action="@{/rd/admin/lecture/add}" th:object="${lecture}" method="post">
+            <table class="table">
+                <tr>
+                    <td>Title:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" id="title" placeholder="Lecture Title"
+                               th:field="*{title}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Agenda:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" id="agenda" placeholder="Lecture Agenda"
+                                  th:field="*{agenda}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date/Time Of Lecture:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="dd.mm.yyyy hh:mm"
+                               pattern="\d{2}.\d{2}.\d{2} \d{2}:\d{2}" th:field="*{dateOfLecture}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Type Of Place:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="Lecture Type Of Place"
+                               th:field="*{typeOfPlace}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Device:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="Lecture Device" th:field="*{device}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link Topic Epam:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="Lecture Link Topic Epam"
+                               th:field="*{linkTopicEpam}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link To Youtube:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="Lecture Link To Youtube"
+                               th:field="*{linkYoutube}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link to Video Portal Epam:</td>
+                    <td>
+                        <input class="col-xs-6" type="text" placeholder="Lecture Link to Video Portal Epam"
+                               th:field="*{linkVideoPortalEpam}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td>
+                        <textarea class="col-xs-6" rows="5" placeholder="Lecture Description"
+                                  th:field="*{description}"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" th:field="*{topicId}">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
